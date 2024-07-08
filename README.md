@@ -1,50 +1,60 @@
-# Welcome to your Expo app 👋
+## Simple Meditation App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Simple Meditation App is a mobile application designed to help users with their meditation practice. This app is built using TypeScript, React, NativeWind, React Native, and Expo, providing a smooth and responsive experience across various devices.
 
-## Get started
+## Features
 
-1. Install dependencies
+1. Onboarding Screen
+   A welcome screen with a linear gradient to help users get started with the app.
 
-   ```bash
+2. Meditation List Screen with Flat List
+   Displays previews of various meditations with corresponding images.
+
+3. Audio Playing Capability
+   Control audio playback and manage a meditation countdown timer.
+
+4. Tab Navigation
+   Navigate between sections like the Meditation Screen and Affirmations screen with ease using tab navigation.
+
+5. Responsiveness
+   Smooth performance and adaptability across various devices and screen sizes for a consistent user experience.
+
+6. Code Architecture and Reusability
+   Well-structured codebase to ensure maintainability and scalability.
+
+## Installation
+
+To get started with the Simple Meditation App, follow these steps:
+
+1. Clone the repository:
+   bash
+   git clone https://github.com/J0hn316/MeditationApp.git
+   cd MeditationApp
+
+2. Install dependencies:
+   bash
+   Copy code
    npm install
-   ```
 
-2. Start the app
+3. Start the Expo development server:
+   bash
+   Copy code
+   npm start
 
-   ```bash
-    npx expo start
-   ```
+4. Use the Expo app on your mobile device to scan the QR code and run the app.
 
-In the output, you'll find options to open the app in a
+## Usage
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+Once the app is installed and running, you can explore the following features:
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+Onboarding Screen: Follow the welcome instructions to get started.
+Meditation List Screen: Browse through the list of available meditations.
+Audio Playing: Select a meditation and control the audio playback.
+Tab Navigation: Use the tab navigation to switch between the Meditation Screen and Affirmations screen.
+Responsive Design: Enjoy a smooth experience on any device.
 
-## Get a fresh project
+## Acknowledgments
 
-When you're ready, run:
+Special thanks to Steven Garcia and FreeCode Camp for their valuable contributions and support. Check out Steven's tutorial on YouTube that helped me create this guide the creation of this app.
 
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+React Native & Expo Router Course – Build a Meditation App Youtube video link - https://www.youtube.com/watch?v=9UKCv9T_rIo&t=182s
