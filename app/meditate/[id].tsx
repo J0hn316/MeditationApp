@@ -1,31 +1,38 @@
 import { Audio } from 'expo-av';
 import { AntDesign } from '@expo/vector-icons';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { router, useLocalSearchParams } from 'expo-router';
 import { View, Text, ImageBackground, Pressable } from 'react-native';
 
-import meditationImages from '@/constants/meditation-images';
 import AppGradient from '@/components/AppGradient';
 import CustomButton from '@/components/CustomButton';
+import { TimerContext } from '@/context/TimerContext';
+import meditationImages from '@/constants/meditation-images';
+import { MEDITATION_DATA, AUDIO_FILES } from '@/constants/MeditationData';
 
 const Meditate = () => {
   const { id } = useLocalSearchParams();
-  const [seconds, setSeconds] = useState(10);
   const [isMeditating, setIsMeditating] = useState(false);
-  const [sound, setSound] = useState<Audio.Sound>();
+  const [audioSound, setSound] = useState<Audio.Sound>();
+  const [isPlayingAudio, setPlayingAudio] = useState(false);
+
+  //const [seconds, setSeconds] = useState(10);
+  const { duration: seconds, setDuration } = useContext(TimerContext);
 
   useEffect(() => {
     let timerId: NodeJS.Timeout;
 
     //Exit
     if (seconds === 0) {
+      if (isPlayingAudio) audioSound?.pauseAsync();
       setIsMeditating(false);
+      setPlayingAudio(false);
       return;
     }
 
     if (isMeditating) {
       timerId = setTimeout(() => {
-        setSeconds(seconds - 1);
+        setDuration(seconds - 1);
       }, 1000);
     }
 
@@ -34,9 +41,43 @@ const Meditate = () => {
     };
   }, [seconds, isMeditating]);
 
+  // Use useEffect to stop audio from playing when user hits back button
+  useEffect(() => {
+    return () => {
+      // setDuration(10);
+      audioSound?.unloadAsync();
+    };
+  }, [audioSound]);
+
   const toggleMeditationSessionStatus = async () => {
-    if (seconds === 0) setSeconds(10);
+    if (seconds === 0) setDuration(10);
     setIsMeditating(!isMeditating);
+    await toggleSound();
+  };
+
+  const initializeSound = async () => {
+    const audioFileName = MEDITATION_DATA[Number(id) - 1].audio;
+    const { sound } = await Audio.Sound.createAsync(AUDIO_FILES[audioFileName]);
+    setSound(sound);
+    return sound;
+  };
+
+  const toggleSound = async () => {
+    const sound = audioSound ? audioSound : await initializeSound();
+    const status = await sound?.getStatusAsync();
+
+    if (status?.isLoaded && !isPlayingAudio) {
+      await sound.playAsync();
+      setPlayingAudio(true);
+    } else {
+      await sound?.pauseAsync();
+      setPlayingAudio(false);
+    }
+  };
+
+  const handleAdjustDuration = () => {
+    if (isMeditating) toggleMeditationSessionStatus();
+    router.push('/(modal)/adjust-meditation-duration');
   };
 
   // Format the time left to ensure two digits are displayed.
@@ -71,8 +112,13 @@ const Meditate = () => {
 
           <View className="mb-5">
             <CustomButton
-              title="Start Meditation"
-              onPress={() => setIsMeditating(true)}
+              title="Adjust duration"
+              onPress={handleAdjustDuration}
+            />
+            <CustomButton
+              title={isMeditating ? 'Stop' : 'Start meditation'}
+              onPress={toggleMeditationSessionStatus}
+              containerStyles="mt-4"
             />
           </View>
         </AppGradient>
